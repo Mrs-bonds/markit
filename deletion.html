@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Delete Account — Mark-It</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --card: #111118;
+      --border: #1e1e2e;
+      --accent: #ff3c5f;
+      --accent2: #ff7c3c;
+      --text: #f0f0f5;
+      --muted: #6b6b80;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(255,60,95,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .container {
+      max-width: 480px;
+      width: 100%;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.6rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 2.5rem;
+      display: block;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .warning {
+      background: rgba(255,60,95,0.08);
+      border: 1px solid rgba(255,60,95,0.2);
+      border-radius: 8px;
+      padding: 0.9rem 1rem;
+      font-size: 0.85rem;
+      color: #ff8fa0;
+      margin-bottom: 2rem;
+      line-height: 1.5;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4rem;
+    }
+
+    input, textarea {
+      width: 100%;
+      background: #0d0d14;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1.25rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--accent);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    button {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      padding: 0.85rem;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      margin-top: 0.5rem;
+    }
+
+    button:hover { opacity: 0.9; }
+    button:active { transform: scale(0.98); }
+
+    .success {
+      display: none;
+      text-align: center;
+      padding: 1.5rem 0 0.5rem;
+    }
+
+    .success .check {
+      font-size: 2.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .success h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .success p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-top: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <span class="logo">Mark-It</span>
+    <div class="card">
+      <div id="formSection">
+        <h1>Delete My Account</h1>
+        <p class="subtitle">Submit this form and we'll permanently delete your data within 30 days. This action cannot be undone.</p>
+
+        <div class="warning">
+          ⚠️ All stored API keys and app data associated with your account will be permanently removed.
+        </div>
+
+        <label>Your Email Address</label>
+        <input type="email" id="email" placeholder="you@example.com" required />
+
+        <label>Reason (optional)</label>
+        <textarea id="reason" placeholder="Let us know why you're leaving..."></textarea>
+
+        <button onclick="submitRequest()">Submit Deletion Request</button>
+      </div>
+
+      <div class="success" id="successSection">
+        <div class="check">✅</div>
+        <h2>Request Received</h2>
+        <p>We'll process your deletion request within 30 days and send a confirmation to your email.</p>
+      </div>
+    </div>
+    <p class="footer">Questions? Contact us at simmonstia10@gmail.com</p>
+  </div>
+
+  <script>
+    function submitRequest() {
+      const email = document.getElementById('email').value.trim();
+      if (!email || !email.includes('@')) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+      const reason = document.getElementById('reason').value.trim();
+      const subject = encodeURIComponent('Mark-It Account Deletion Request');
+      const body = encodeURIComponent(`Email: ${email}\n\nReason: ${reason || 'Not provided'}`);
+      window.location.href = `mailto:simmonstia10@gmail.com?subject=${subject}&body=${body}`;
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('successSection').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
